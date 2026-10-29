@@ -1,0 +1,65 @@
+classDiagram
+    direction TB
+    class ContenidoAudiovisual {
+        <<abstract>>
+        -contar : int$
+        -titulo : String
+        -duracionEnMinutos : int
+        -genero : String
+        -id : int
+        +ContenidoAudiovisual(titulo, duracionEnMinutos, genero)
+        +getTitulo() String
+        +getDuracionEnMinutos() int
+        +getGenero() String
+        +getId() int
+        +getTipo()* String
+        #detallesEspecificos()* String
+        +obtenerDetalles() String
+        +mostrarDetalles() void
+    }
+    class Pelicula {
+        -estudio : String
+        -actores : List~Actor~
+        +agregarActor(actor : Actor) boolean
+        +quitarActor(actor : Actor) boolean
+        +getActores() List~Actor~
+    }
+    class SerieDeTV {
+        -temporadas : List~Temporada~
+        +agregarTemporada(anio : int, episodios : int) Temporada
+        +eliminarUltimaTemporada() boolean
+        +getNumeroTemporadas() int
+        +getTotalEpisodios() int
+    }
+    class Documental {
+        -tema : String
+        -investigadores : List~Investigador~
+        +agregarInvestigador(i : Investigador) boolean
+        +quitarInvestigador(i : Investigador) boolean
+        +getInvestigadores() List~Investigador~
+    }
+    class Actor {
+        -nombre : String
+        -nacionalidad : String
+        -anioDebut : int
+        +toString() String
+    }
+    class Temporada {
+        -numero : int
+        -anioEstreno : int
+        -numeroEpisodios : int
+        ~Temporada(numero, anioEstreno, numeroEpisodios)
+        +toString() String
+    }
+    class Investigador {
+        -nombre : String
+        -especialidad : String
+        -institucion : String
+        +toString() String
+    }
+    ContenidoAudiovisual <|-- Pelicula
+    ContenidoAudiovisual <|-- SerieDeTV
+    ContenidoAudiovisual <|-- Documental
+    Pelicula "1" o-- "0..*" Actor : agregación (reparto)
+    SerieDeTV "1" *-- "0..*" Temporada : composición
+    Documental "1" --> "0..*" Investigador : asociación (asesorado por)
