@@ -1,8 +1,12 @@
-package poo;
-import uni1a.*;
+package app;
+
+import modelo.ContenidoAudiovisual;
+import modelo.Documental;
+import modelo.Pelicula;
+import modelo.SerieDeTV;
 
 public class PruebaAudioVisual {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println("Hello from Eclipse!");
 
         // Crear instancias de las subclases
@@ -11,7 +15,7 @@ public class PruebaAudioVisual {
         contenidos[1] = new SerieDeTV("Game of Thrones", 60, "Fantasy", 8);
         contenidos[2] = new Documental("Cosmos", 45, "Science", "Astronomy");
 
-        // Mostrar los detalles de cada contenido audiovisual
+        // Mostrar los detalles de cada contenido audiovisual (polimorfismo)
         for (ContenidoAudiovisual contenido : contenidos) {
             contenido.mostrarDetalles();
         }

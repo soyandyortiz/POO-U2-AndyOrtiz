@@ -1,0 +1,14 @@
+# Archivos compilados de Eclipse / Java
+bin/
+out/
+*.class
+
+# Configuración local del IDE
+.metadata/
+.settings/
+.idea/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
