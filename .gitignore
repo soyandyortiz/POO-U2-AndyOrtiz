@@ -5,7 +5,6 @@ out/
 
 # Configuración local del IDE
 .metadata/
-.settings/
 .idea/
 *.iml
 
