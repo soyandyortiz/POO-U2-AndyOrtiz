@@ -91,6 +91,13 @@ public abstract class ContenidoAudiovisual implements Calificable {
                 + detallesEspecificos();
     }
 
+    /** Resumen de una línea para listados. */
+    @Override
+    public String toString() {
+        return String.format("[%d] %-13s | %s (%d min) | %.1f/5",
+                id, getTipo(), titulo, duracionEnMinutos, getCalificacionPromedio());
+    }
+
     /** Método polimórfico heredado del código original. */
     public void mostrarDetalles() {
         System.out.println(obtenerDetalles());
