@@ -7,12 +7,14 @@ package modelo;
  *
  * @author Andy Ortiz
  */
-public abstract class ContenidoAudiovisual {
+public abstract class ContenidoAudiovisual implements Calificable {
     private static int contar = 0;
     private String titulo;
     private int duracionEnMinutos;
     private String genero;
     private final int id;
+    private int sumaEstrellas;
+    private int numeroCalificaciones;
 
     public ContenidoAudiovisual(String titulo, int duracionEnMinutos, String genero) {
         this.id = contar++;
@@ -50,6 +52,27 @@ public abstract class ContenidoAudiovisual {
         return id;
     }
 
+    // ---- Implementación de la interfaz Calificable ----
+    @Override
+    public void calificar(int estrellas) {
+        if (estrellas < MIN_ESTRELLAS || estrellas > MAX_ESTRELLAS) {
+            throw new IllegalArgumentException(
+                    "La calificación debe estar entre " + MIN_ESTRELLAS + " y " + MAX_ESTRELLAS);
+        }
+        sumaEstrellas += estrellas;
+        numeroCalificaciones++;
+    }
+
+    @Override
+    public double getCalificacionPromedio() {
+        return numeroCalificaciones == 0 ? 0 : (double) sumaEstrellas / numeroCalificaciones;
+    }
+
+    @Override
+    public int getNumeroCalificaciones() {
+        return numeroCalificaciones;
+    }
+
     /** Nombre del tipo de contenido (Película, Serie de TV, ...). */
     public abstract String getTipo();
 
@@ -63,6 +86,8 @@ public abstract class ContenidoAudiovisual {
                 + "Título: " + titulo + "\n"
                 + "Duración en minutos: " + duracionEnMinutos + "\n"
                 + "Género: " + genero + "\n"
+                + String.format("Calificación: %.1f/5 (%d votos)%n",
+                        getCalificacionPromedio(), numeroCalificaciones)
                 + detallesEspecificos();
     }
 

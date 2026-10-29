@@ -1,0 +1,101 @@
+classDiagram
+    direction TB
+    class Calificable {
+        <<interface>>
+        +MIN_ESTRELLAS : int$
+        +MAX_ESTRELLAS : int$
+        +calificar(estrellas : int) void
+        +getCalificacionPromedio() double
+        +getNumeroCalificaciones() int
+    }
+    class ContenidoAudiovisual {
+        <<abstract>>
+        -contar : int$
+        -titulo : String
+        -duracionEnMinutos : int
+        -genero : String
+        -id : int
+        -sumaEstrellas : int
+        -numeroCalificaciones : int
+        +ContenidoAudiovisual(titulo, duracionEnMinutos, genero)
+        +getTitulo() String
+        +getDuracionEnMinutos() int
+        +getGenero() String
+        +getId() int
+        +getTipo()* String
+        #detallesEspecificos()* String
+        +obtenerDetalles() String
+        +mostrarDetalles() void
+    }
+    class Pelicula {
+        -estudio : String
+        -actores : List~Actor~
+        +agregarActor(actor : Actor) boolean
+        +quitarActor(actor : Actor) boolean
+        +getActores() List~Actor~
+    }
+    class SerieDeTV {
+        -temporadas : List~Temporada~
+        +agregarTemporada(anio : int, episodios : int) Temporada
+        +eliminarUltimaTemporada() boolean
+        +getNumeroTemporadas() int
+        +getTotalEpisodios() int
+    }
+    class Documental {
+        -tema : String
+        -investigadores : List~Investigador~
+        +agregarInvestigador(i : Investigador) boolean
+        +quitarInvestigador(i : Investigador) boolean
+        +getInvestigadores() List~Investigador~
+    }
+    class VideoMusical {
+        +UMBRAL_VIRAL : long$
+        -artista : String
+        -album : String
+        -anioLanzamiento : int
+        -reproducciones : long
+        -participantes : List~Actor~
+        +registrarReproducciones(cantidad : long) void
+        +esViral() boolean
+        +agregarParticipante(actor : Actor) boolean
+        +quitarParticipante(actor : Actor) boolean
+    }
+    class Podcast {
+        -anfitrion : String
+        -plataforma : String
+        -numeroEpisodio : int
+        -invitados : List~Investigador~
+        +agregarInvitado(i : Investigador) boolean
+        +quitarInvitado(i : Investigador) boolean
+        +esMonologo() boolean
+    }
+    class Actor {
+        -nombre : String
+        -nacionalidad : String
+        -anioDebut : int
+        +toString() String
+    }
+    class Temporada {
+        -numero : int
+        -anioEstreno : int
+        -numeroEpisodios : int
+        ~Temporada(numero, anioEstreno, numeroEpisodios)
+        +toString() String
+    }
+    class Investigador {
+        -nombre : String
+        -especialidad : String
+        -institucion : String
+        +toString() String
+    }
+    Calificable <|.. ContenidoAudiovisual
+    ContenidoAudiovisual <|-- Pelicula
+    ContenidoAudiovisual <|-- SerieDeTV
+    ContenidoAudiovisual <|-- Documental
+    ContenidoAudiovisual <|-- VideoMusical
+    ContenidoAudiovisual <|-- Podcast
+    Pelicula "1" o-- "0..*" Actor : agregación (reparto)
+    SerieDeTV "1" *-- "0..*" Temporada : composición
+    Documental "1" --> "0..*" Investigador : asociación (asesorado por)
+    VideoMusical "1" o-- "0..*" Actor : agregación (participantes)
+    Podcast "1" --> "0..*" Investigador : asociación (invitados)
